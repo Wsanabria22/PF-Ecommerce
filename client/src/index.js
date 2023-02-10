@@ -11,19 +11,23 @@ import {store} from './redux/store';
 import axios from "axios";
 
 // Configuracion Auth0
-console.log(
+
+console.log('variables de entorno',
   process.env.REACT_APP_AUTH0_DOMAIN,
-  process.env.REACT_APP_AUTH0_CLIENT_ID
+  process.env.REACT_APP_AUTH0_CLIENT_ID,
+  process.env.BASE_URL_API,
+  process.env.BASE_URL_APP
 )
 // REACT_APP_AUTH0_DOMAIN=dev-5h1bog45hog5t2oc.us.auth0.com
 // REACT_APP_AUTH0_CLIENT_ID=51MjhyIb5bsjWBFdgVk3S0D7BEhFladQ
 const domain = process.env.REACT_APP_AUTH0_DOMAIN;
 const clientID = process.env.REACT_APP_AUTH0_CLIENT_ID;
-const postLoginLocal = 'http://localhost:3000/postlogin';
-const postLoginDeploy = 'https://proyecto-grupal3.vercel.app/postlogin';
+const baseUrlApp = process.env.BASE_URL_APP || 'http://localhost:3000';
+const postLogin = baseUrlApp + '/postlogin';
 
-//axios.defaults.baseURL = 'http://localhost:3001'
-axios.defaults.baseURL = 'proyecto-grupal-back-production.up.railway.app/'
+axios.defaults.baseURL = process.env.BASE_URL_API || 'http://localhost:3001'
+
+
 // con react-dom v18 y superior
 //const root = ReactDOM.createRoot(document.getElementById('root')); 
 //root.render(
@@ -31,7 +35,7 @@ axios.defaults.baseURL = 'proyecto-grupal-back-production.up.railway.app/'
  <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <Auth0Provider domain={domain} clientId={clientID} redirectUri={ postLoginDeploy } >
+        <Auth0Provider domain={domain} clientId={clientID} redirectUri={ postLogin } >
           <App />
         </Auth0Provider>
       </BrowserRouter>
