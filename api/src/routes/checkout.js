@@ -1,11 +1,16 @@
 const { Router } = require("express");
 const router = Router();
+require("dotenv").config();
 const mercadopago = require("mercadopago");
 const { userLogin } = require("..//Controllers/userController");
 
+const ACCESS_TOKEN = process.env.ACCESS_TOKEN;
+
+const BASE_URL_APP = process.env.BASE_URL_APP || 'http://localhost:3000';
+
 //Provisional de esta forma, luego va en el .env
 
-const ACCESS_TOKEN = "APP_USR-2136680771902247-071214-4767199d5dfa22b7c0885a9e58ff3bec-1159384629";
+// const ACCESS_TOKEN = "APP_USR-2136680771902247-071214-4767199d5dfa22b7c0885a9e58ff3bec-1159384629";
 //const ACCESS_TOKEN = "TEST-6405482469447912-122618-bdf78e9edc3a5200ee09947407b8f220-108067496";
 //const ACCESS_TOKEN = "TEST-3513189841843574-122218-a2e90018ba813e2fee73acec8437541e-196223807";
 
@@ -60,8 +65,8 @@ router.post("/", (req, res) => {
                 installments: 12
                 },
             back_urls:{
-                success: "https://proyecto-grupal3-n2dzkkwc2-rinaldic.vercel.app/checkout/success/",
-                failure: "https://proyecto-grupal3-n2dzkkwc2-rinaldic.vercel.app/checkout/success/",
+                success: BASE_URL_APP + "/checkout/success/",
+                failure: BASE_URL_APP + "/checkout/success/",
             },
             auto_return: "approved",
             //binary_mode: true,

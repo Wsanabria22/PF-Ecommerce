@@ -133,7 +133,7 @@ const Cart = () => {
   }
 
   async function buy() {
-    const response = await axios.post("http://localhost:3001/checkout", {
+    const response = await axios.post("/checkout", {
       items: cart,
       pagador: input,
     });
