@@ -8,7 +8,7 @@ const ACCESS_TOKEN = process.env.ACCESS_TOKEN;
 
 // const BASE_URL_APP = process.env.BASE_URL_APP || 'http://localhost:3000';
 
-const BASE_URL_APP = 'https://pf-ecommerce-git-main-william-sanabria-yahooes.vercel.app';
+const BASE_URL_APP = 'https://pf-ecommerce-peach.vercel.app';
 
 
 

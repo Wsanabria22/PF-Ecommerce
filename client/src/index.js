@@ -23,7 +23,7 @@ console.log('variables de entorno',
 const domain = process.env.REACT_APP_AUTH0_DOMAIN;
 const clientID = process.env.REACT_APP_AUTH0_CLIENT_ID;
 // const baseUrlApp = process.env.BASE_URL_APP || 'http://localhost:3000';
-const baseUrlApp = 'https://pf-ecommerce-git-main-william-sanabria-yahooes.vercel.app';
+const baseUrlApp = 'https://pf-ecommerce-peach.vercel.app';
 const postLogin = baseUrlApp + '/postlogin';
 
 // axios.defaults.baseURL = process.env.BASE_URL_API || 'http://localhost:3001'

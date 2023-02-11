@@ -1,7 +1,9 @@
 import axios from "axios";
 import Swal from "sweetalert2";
 
-const fetchBaseUrlApi = process.env.BASE_URL_API || 'http://localhost:3001'
+// const fetchBaseUrlApi = process.env.BASE_URL_API || 'http://localhost:3001'
+
+const fetchBaseUrlApi = 'https://pf-ecommerce-production-aca7.up.railway.app'
 
 export function getProducts() {
   return (dispatch) => {
