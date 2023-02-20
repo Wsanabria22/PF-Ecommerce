@@ -22,12 +22,12 @@ console.log('variables de entorno',
 // REACT_APP_AUTH0_CLIENT_ID=51MjhyIb5bsjWBFdgVk3S0D7BEhFladQ
 const domain = process.env.REACT_APP_AUTH0_DOMAIN;
 const clientID = process.env.REACT_APP_AUTH0_CLIENT_ID;
-// const baseUrlApp = process.env.BASE_URL_APP || 'http://localhost:3000';
-const baseUrlApp = 'https://pf-ecommerce-peach.vercel.app';
+const baseUrlApp = process.env.BASE_URL_APP || 'http://localhost:3000';
+// const baseUrlApp = 'https://pf-ecommerce-peach.vercel.app';
 const postLogin = baseUrlApp + '/postlogin';
 
-// axios.defaults.baseURL = process.env.BASE_URL_API || 'http://localhost:3001'
-axios.defaults.baseURL = 'https://pf-ecommerce-production-aca7.up.railway.app'
+axios.defaults.baseURL = process.env.BASE_URL_API || 'http://localhost:3001'
+// axios.defaults.baseURL = 'https://pf-ecommerce-production-aca7.up.railway.app'
 
 // con react-dom v18 y superior
 //const root = ReactDOM.createRoot(document.getElementById('root')); 

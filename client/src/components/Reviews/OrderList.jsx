@@ -1,33 +1,32 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
-import { styled } from "@mui/material/styles";
+import { Link, useHistory } from "react-router-dom";
+import { makeStyles } from "@mui/styles";
+import * as actions from "../../redux/actions/productsActions";
+import s from "./OrderList.module.css";
+import logo from "..//../img/logo.JPG";
 import Grid from "@material-ui/core/Grid";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Box from "@material-ui/core/Box";
 import { Button } from "@material-ui/core";
-import * as actions from "../../redux/actions/productsActions";
-import s from "./OrderList.module.css";
-import logo from "..//../img/logo.JPG";
 import IconButton from "@material-ui/core/IconButton";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
-import ReviewForm from "./ReviewForm";
 import SearchIcon from "@mui/icons-material/Search";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
     display: "flex",
     direction: "row",
     justifyContent: "center",
     marginTop: 5,
+    width: '100%',
   },
   detail: {
+    display: "flex",
     direction: "row",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
   },
   header: {
@@ -45,12 +44,12 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
   },
   card: {
-    width: 400,
-    height: 800,
+    // width: 400,
+    // height: 800,
   },
   typo: {
     fontfamily: "Poppins",
-    fontSize: 40,
+    fontSize: 25,
     display: "flex",
     justifyContent: "center",
   },
@@ -72,44 +71,61 @@ const useStyles = makeStyles((theme) => ({
     fontfamily: "Poppins",
     fontSize: 25,
   },
+  buttonBack: {
+    display: "flex",
+    justifyContent: "flex-End",
+  }
 }));
 
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+
 export default function OrderList({ onOrderSelect }) {
-  const orders = useSelector((state) => state.orders);
+  const order1 = useSelector((state) => state.orders);
   const dispatch = useDispatch();
   const classes = useStyles();
   const history = useHistory();
-  const [showForm, setShowForm] = useState([]);
+  const [showForm, setShowForm] = useState(false);
+  const userProfile = useSelector((state) => state.userProfile);
+  const user = useSelector((state) => state.user);
+  const orders = order1.filter(e => e.userId === user.id)
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   console.log(orders);
-
+  
   useEffect(() => {
     dispatch(actions.getOrders());
+    dispatch(actions.getUserProfile(user))
   }, [dispatch]);
 
-  function handleClickBack() {
-    history.push("/home");
-  }
-
-  const handleShowForm = (indOrder, indProd) => {
-    let formOrder = []
-    formOrder[indOrder][indProd] = true;
-    setShowForm(formOrder);
+  const handleClickBack = () => {
+    history.goBack();
   }
 
   return (
     <div className={s.general}>
-      <Grid container spacing={2} className={classes.header}>
+      <Grid container spacing={2} xs={12} className={classes.header}>
         <Grid item xs={4} className={classes.trade}>
-          <Typography>
-            <img src={logo} alt={"logo"} className={classes.image} />
-          </Typography>
+          <img src={logo} alt={"logo"} className={classes.image} />
           <Typography className={classes.tradeName}>CloudyBuy</Typography>
         </Grid>
-        <Grid item>
+        <Grid item xs={4}>
           <Typography className={classes.typo}>Your Orders</Typography>
         </Grid>
-        <Grid item>
+        <Grid item xs={4} className={classes.buttonBack}>
           <Button
             size="small"
             variant="contained"
@@ -145,7 +161,7 @@ export default function OrderList({ onOrderSelect }) {
             </IconButton>
           </Box>
         ) : (
-          orders.map((order, indexOrder) => {
+          orders.map((order) => {
             const orderDetails = order.OrderDetails;
             let totalPrice = 0;
             for (let i = 0; i < orderDetails.length; i++) {
@@ -154,67 +170,73 @@ export default function OrderList({ onOrderSelect }) {
             }
 
             return (
-              <Grid spacing={2} item xs={4} key={order._id}>
+              <Grid spacing={2} item xs={11} key={order._id}>
                 <Card className={classes.card}>
                   <CardContent>
-                    <Typography
-                      variant="h5"
-                      component="h2"
-                      className={classes.paragraph}
-                    >
-                      Order #{order.id}
-                    </Typography>
-                    <Typography color="textSecondary">
-                      Date: {order.createdAt}
-                    </Typography>
-                    <Typography color="textSecondary">
-                      Status: {order.status}
-                    </Typography>
+                    <Grid container spacing={1} className={classes.detail}>
+                      <Grid item xs={2}>
+                        <Typography
+                          variant="h5"
+                          component="h2"
+                          className={classes.paragraph}
+                        >
+                          Order #{order.id}
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={3}>
+                        <Typography className={classes.paragraph}>
+                          Date: {order.createdAt}
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={3}>
+                        <Typography className={classes.paragraph}>
+                          Status: {order.status}
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={3} >
+                        <Typography className={classes.paragraph}>
+                        Order Total:$ {totalPrice}
+                        </Typography>
+                      </Grid>
+                    </Grid>
                     <hr />
-                    {orderDetails.map((orderDetail, indexProduct) => {
+                    {orderDetails.map((orderDetail) => {
+                      const productId =  orderDetail.product.id;
+                      const orderId = order.id;
+                      const userId = order.userId;
                       return (
-                        <Grid container className={classes.detail}>
-                          <Typography
-                            key={orderDetail._id}
-                            className={s.paragraph}
-                          >
+                        <Grid container spacing={1} className={classes.detail}>
+                          <Grid item xs={1}>
                             <img
+                              className={classes.image}
                               src={orderDetail.product.thumbnail}
                               alt={orderDetail.product.title}
-                              width="200"
-                              height="200"
-                              alignItems="center"
                             />
+                          </Grid>
+                          <Grid item xs={5}>
                             <Typography className={classes.paragraph}>
                               {orderDetail.product.title}:{" "}
                             </Typography>
+                          </Grid>
+                          <Grid item xs={2}>
                             <Typography className={classes.paragraph}>
                               {orderDetail.quantity} x $
                               {orderDetail.product.price}
                             </Typography>
-                            <Typography className={classes.paragraph}>
-                              <Button
+                          </Grid>
+                          <Grid item xs={3}>
+                            <Link to={`/reviews/${productId}/${orderId}/${userId}`}>    
+                              <Button variant="contained"
                                 id="review-button"
-                                onClick={() => handleShowForm(indexOrder,indexProduct)}
-                              >
-                                Leave your review
+                                // onClick={() => handleOpen()}
+                                >Leave your review
                               </Button>
-                              {showForm[indexOrder][indexProduct] && (
-                                <ReviewForm
-                                  productId={orderDetail.product.id}
-                                  orderId={order.id}
-                                  userId={order.userId}
-                                />
-                              )}
-                            </Typography>
-                          </Typography>
+                            </Link>
+                          </Grid>
                         </Grid>
                       );
                     })}
                     <hr />
-                    <Typography variant="body2" component="p">
-                      Order Total:$ {totalPrice}
-                    </Typography>
                   </CardContent>
                 </Card>
               </Grid>

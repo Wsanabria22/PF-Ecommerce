@@ -1,9 +1,17 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, TableRow, TableCell, TextField } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 import * as actions from "../../redux/actions/productsActions";
 
 import styles from "../CartProduct/CartProduct.module.css";
+
+const useStyles = makeStyles((theme) => ({
+  image: {
+    width: "50px",
+    height: "50px",
+  },
+}));
 
 export default function CartProduct({
   productId,
@@ -14,6 +22,7 @@ export default function CartProduct({
 }) {
   const dispatch = useDispatch();
   let product = useSelector((state) => state.products);
+  const classes = useStyles();
 
   function removeCart() {
     dispatch(actions.removeCart(productId));
@@ -36,19 +45,12 @@ export default function CartProduct({
       key={productId}
       className={productId % 2 === 0 ? styles.tableRowEven : styles.tableRowOdd}
     >
-      {/* <TableCell sx={{ color: "#e7ebf0" }}>{productId}</TableCell> */}
-      <TableCell><img src={images} alt={title} /></TableCell>
+      <TableCell><img src={images} alt={title} className={classes.image} /></TableCell>
       <TableCell>{title}</TableCell>
       <TableCell>$ {amount}</TableCell>
-      {/* <TableCell sx={{color: '#e7ebf0'}}><TextField sx={{ color: '#e7ebf0', maxWidth: '75px'}} id='filled-number' type='number' variant='filled' defaultValue={quantity} /></TableCell> */}
       <TableCell>
         {" "}
-        <input
-          className={styles.quantityInput}
-          type="number"
-          name="quantity"
-          value={quantity}
-          onChange={changeCart}
+        <input className={styles.quantityInput} type="number" name="quantity" value={quantity} onChange={changeCart}
         />{" "}
       </TableCell>
       <TableCell>$ {amount * quantity}</TableCell>

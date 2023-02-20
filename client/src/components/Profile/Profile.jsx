@@ -2,13 +2,62 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { Grid, Typography, Button } from "@material-ui/core";
+import { makeStyles } from "@mui/styles";
 import * as actions from '../../redux/actions/productsActions';
 import logo  from '../../img/logo.JPG'
 import s from './Profile.module.css';
 import Swal from "sweetalert2"
 
-export default function Profile() {
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    minheight: '100%',
+    minwidth: '100%',
+    backgroundImage: "linear-gradient(2.6deg, rgb(126, 154, 191) 16%, rgb(254, 255, 255) 91.1%)"
+  },
+  header: {
+    display: "flex",
+    direction: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    marginTop: "2px",
+  },
+  typo: {
+    fontfamily: "Poppins",
+    fontSize: 20,
+    display: "flex",
+    justifyContent: "center",
+  },
+  paragraph: {
+    margin: "10px 0",
+  },
+  trade: {
+    display: "flex",
+    direction: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    paddingLeft: "5px",
+  },
+  tradeName: {
+    fontfamily: "Poppins",
+    fontSize: 20,
+  },
+  image: {
+    width: "50px",
+    height: "50px",
+    marginRight: "5px",
+  },
+  buttonBack: {
+    display: "flex",
+    justifyContent: "flex-End",
+  }
+}));
 
+export default function Profile() {
+  const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
   const userProfile = useSelector((state) => state.userProfile);
@@ -65,24 +114,35 @@ export default function Profile() {
     history.push('/')
   }
 
+  const handleClickBack = () => {
+    history.goBack();
+  }
+
   const validateData = (data) => {
     let errors = {};
-    if (data.name === '')  {
-      errors.name = 'Must specify a Name'
-    }
-    if (data.surname === '') {
-      errors.surname = 'Must specify a Last Name'
-    }
-    if (data.email === '') {
-      errors.email = 'Must specify an email'
-    }
-    if (data.adress === '') { 
-      errors.adress = 'Must specify an address'
-    }
+    if (data.name === '')  errors.name = 'Must specify a Name'
+    if (data.surname === '') errors.surname = 'Must specify a Last Name'
+    if (data.email === '') errors.email = 'Must specify an email'
+    if (data.adress === '') errors.adress = 'Must specify an address'
     return errors
   }
 
   return (
+  <div className={s.general}>
+    <Grid container spacing={2} xs={12} className={classes.header}>
+      <Grid item xs={4} className={classes.trade}>
+        <img src={logo} alt={"logo"} className={classes.image} />
+        <Typography className={classes.tradeName}>CloudyBuy</Typography>
+      </Grid>
+      <Grid item xs={4}>
+        <Typography className={classes.typo}>Profile</Typography>
+      </Grid>
+      <Grid item xs={4} className={classes.buttonBack}>
+        <Button  size="small" variant="contained" color="primary" onClick={handleClickBack}>
+          Go Back
+        </Button>
+      </Grid>
+    </Grid>
     <div className={s.container}>
       <section className={s.section1}>
         <div className={s.logo}>
@@ -134,8 +194,8 @@ export default function Profile() {
       </section>
 
     </div>
-
-  )
+  </div>
+)
 
 
 

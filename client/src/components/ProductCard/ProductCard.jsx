@@ -127,13 +127,11 @@ export default function ProductCard({
   }
 
   function checkIsInCart(id) {
-    console.log(id);
-    console.log(cart);
     const cartItemFound = cart.find((cartItem) => {
       return cartItem.productId === id;
     });
     //dispatch(getCart());
-    console.log(cartItemFound);
+
     return cartItemFound ? true : false;
     // console.log(id);
     // console.log(cart);

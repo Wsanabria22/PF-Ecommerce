@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { makeStyles } from "@material-ui/core/styles";
+import { useHistory, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { makeStyles } from "@mui/styles";
 import Rating from "@mui/material/Rating";
 import TextField from "@material-ui/core/TextField";
-import { Button, Grid, Typography } from "@material-ui/core";
+import { Box, Button, Card, CardContent, Divider, Grid, Typography } from "@material-ui/core";
 import IconButton from "@mui/material/IconButton";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import SendIcon from "@mui/icons-material/Send";
@@ -11,6 +12,8 @@ import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import * as actions from "../../redux/actions/productsActions";
+import logo from "..//../img/logo.JPG";
+import s from "./ReviewForm.module.css";
 import Swal from "sweetalert2";
 
 const useStyles = makeStyles((theme) => ({
@@ -18,15 +21,66 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    minheight: '100%',
+    minwidth: '100%',
+    backgroundImage: "linear-gradient(2.6deg, rgb(126, 154, 191) 16%, rgb(254, 255, 255) 91.1%)"
+  },
+  header: {
+    display: "flex",
+    direction: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    marginTop: "2px",
+  },
+  card: {
+    width: '60%',
+    height: '60%',
+  },
+  detail: {
+    display: "flex",
+    direction: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+  },
+  image: {
+    width: "50px",
+    height: "50px",
+    marginRight: "5px",
+  },
+  typo: {
+    fontfamily: "Poppins",
+    fontSize: 25,
+    display: "flex",
+    justifyContent: "center",
+  },
+  paragraph: {
+    margin: "10px 0",
+  },
+  trade: {
+    display: "flex",
+    direction: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    paddingLeft: "5px",
+  },
+  tradeName: {
+    fontfamily: "Poppins",
+    fontSize: 20,
   },
   submitButton: {
     marginTop: theme.spacing(2),
   },
+  buttonBack: {
+    display: "flex",
+    justifyContent: "flex-End",
+  }
 }));
 
-export default function ReviewForm({ productId, orderId, userId }) {
+export default function ReviewForm() {
+  const { productId, orderId, userId } = useParams();
   const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
   const [rating, setRating] = useState("");
   const [comment, setComment] = useState("");
   const [image, setImage] = useState(null);
@@ -40,7 +94,12 @@ export default function ReviewForm({ productId, orderId, userId }) {
     image: null,
   });
   const [errors, setErrors] = useState({});
-  //const [commentError, setCommentError] = useState("");
+  const productDetail = useSelector((state) => state.detail)
+
+  useEffect(()=>{
+    dispatch(actions.getProductsDetails(productId));
+    console.log('productDetail', productDetail);
+  },[productId])
 
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -50,17 +109,9 @@ export default function ReviewForm({ productId, orderId, userId }) {
     color: theme.palette.text.secondary,
   }));
 
-  useEffect(() => {
-    console.log(productId, orderId, userId);
-  }, [productId, orderId, userId]);
-
-  useEffect(() => {
-    console.log("formData: ", formData);
-    console.log("errors: ", errors);
-    console.log("rating: ", rating);
-    console.log("comment: ", comment);
-    console.log("image: ", image);
-  }, [formData, errors, rating, comment, image]);
+  const handleClickBack = () => {
+    history.goBack();
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -69,23 +120,18 @@ export default function ReviewForm({ productId, orderId, userId }) {
     setErrors(errors);
 
     if (Object.keys(errors).length === 0) {
-      console.log(orderId, productId, userId, rating, comment, image);
       setFormData({
         ...formData,
         productId: productId,
         orderId: orderId,
       });
-      console.log("data submited", formData);
       dispatch(actions.postReview(formData));
-
-      setFormVisible(false);
-      setSubmitting(true);
-
       Swal.fire({
         title: "Review created!",
         icon: "success",
         confirmButtonText: "Continue",
       });
+      history.goBack();
     }
   };
 
@@ -98,38 +144,56 @@ export default function ReviewForm({ productId, orderId, userId }) {
     setFormData({ ...formData, comment: e.target.value });
   };
 
-  const handleImageChange = (e) => {
-    setFormData({ ...formData, image: e.target.value });
-  };
-
   const handleRatingChange = (e) => {
     setFormData({ ...formData, rating: e.target.value });
   };
-
-  /*const handleCloseForm = (e) => {
-    setFormVisible(false);
-  };*/
 
   function validate(formData) {
     let errors = {};
     if (isNaN(parseFloat(formData.rating).toFixed(2))) {
       errors.rating = "Please rate the product";
     }
+    if (formData.comment === "") {
+      errors.comment = "Comment section must not be empty";
+    } 
     return errors;
-  }
+  };
 
   return (
+  <div className={s.general}>
+      <Grid container spacing={2} xs={12} className={classes.header}>
+        <Grid item xs={4} className={classes.trade}>
+          <img src={logo} alt={"logo"} className={classes.image} />
+          <Typography className={classes.tradeName}>CloudyBuy</Typography>
+        </Grid>
+        <Grid item xs={4}>
+          <Typography className={classes.typo}>Create a Review</Typography>
+        </Grid>
+        <Grid item xs={4} className={classes.buttonBack}>
+          <Button  size="small" variant="contained" color="primary" onClick={handleClickBack}>
+            Go Back
+          </Button>
+        </Grid>
+      </Grid>
+      <hr />
+  <Card className={classes.card}>
+    <CardContent>
     <form autoComplete="off" onSubmit={handleSubmit}>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Typography variant="h6">Create a review</Typography>
+          <Typography variant="h6">Review Of:</Typography>
+        </Grid>
+        <Grid item xs={12} className={classes.detail}>
+           <Grid item xs={1}>
+              <img className={classes.image} src={productDetail.thumbnail} alt={productDetail.title}/>
+            </Grid>
+            <Grid item xs={5}>
+              <Typography className={classes.paragraph}>
+                {productDetail.title}
+              </Typography>
+            </Grid>
         </Grid>
         <Grid item xs={12}>
-          <Stack direction="row" spacing={2}>
-            <Item>Order ID: {orderId}</Item>
-            <Item>Product ID: {productId}</Item>
-            <Item>User ID: {userId}</Item>
-          </Stack>
           <br />
           <TextField
             fullWidth
@@ -157,26 +221,6 @@ export default function ReviewForm({ productId, orderId, userId }) {
             <Typography color="error">{errors.rating}</Typography>
           )}
         </Grid>
-        {/*<Grid item xs={12}>
-          <Typography variant="body">Upload:</Typography>
-          <Stack direction="row" alignItems="center" spacing={2}>
-            <IconButton
-              color="primary"
-              aria-label="upload picture"
-              component="label"
-              display="flex"
-              alignSelf="center"
-            >
-              <input
-                hidden
-                accept="image/*"
-                type="file"
-                onChange={handleImageChange}
-              />
-              <PhotoCamera />
-            </IconButton>
-          </Stack>          
-        </Grid>*/}
       </Grid>
       <hr />
       <Button
@@ -188,5 +232,8 @@ export default function ReviewForm({ productId, orderId, userId }) {
         {isSubmitting ? "Submitting..." : "Make a review"}
       </Button>
     </form>
+    </CardContent>
+  </Card>
+  </div>
   );
 }

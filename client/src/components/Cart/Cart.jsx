@@ -24,7 +24,7 @@ import {
   Button,
   Grid,
 } from "@mui/material";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@mui/styles";
 import styles from "../Cart/Cart.module.css";
 
 //import Swal from "sweetalert2";
@@ -47,14 +47,10 @@ const useStyles = makeStyles((theme) => ({
     direction:"row",
     justifyContent:"flex-start",
     alignItems:"center",
-    marginTop:"2px"
   },
   paper: {
     height: 140,
     width: 100,
-  },
-  control: {
-    padding: theme.spacing(2),
   },
   card: {
     width: 400,
@@ -83,6 +79,10 @@ const useStyles = makeStyles((theme) => ({
   tradeName: {
     fontfamily: "Poppins",
     fontSize: 20,
+  },
+  buttonBack: {
+    display: "flex",
+    justifyContent: "flex-End",
   }
 }));
 
@@ -172,21 +172,18 @@ const Cart = () => {
   return (
     <div className={styles.container}>
       <Login modalOpen={modalOpen} closeLogin={closeLogin} />
-      <Grid container spacing={2} className={classes.header && styles.header}>
+      <Grid container spacing={2} xs={12} className={classes.header}>
         <Grid item xs={4} className={classes.trade}>
-          <Typography>
           <img src={logo} alt={"logo"} className={classes.image}/>
-          </Typography>
           <Typography className={classes.tradeName}>CloudyBuy</Typography>
         </Grid>
-        <Grid item>
+        <Grid item xs={4}>
           <Typography className={classes.typo}>Shopping Cart</Typography>
         </Grid>
-        <Grid item>
+        <Grid item xs={4} className={classes.buttonBack}>
           <Button size="small" variant="contained" color="primary" onClick={handleClickBack}>Go to Store</Button>
         </Grid>
       </Grid>
-      <hr />
       <div className={styles.cart}>
         {cart.length === 0 ? (
           <div className={styles.fullDiv}>
@@ -195,7 +192,7 @@ const Cart = () => {
         ) : 
         (
           <div className={styles.fullDiv}>
-              <TableContainer className={styles.table_container}>
+              <TableContainer>
                 <Table
                   sx={{ minWidth: "60rem" }}
                   size="medium"

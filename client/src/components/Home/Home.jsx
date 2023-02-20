@@ -204,11 +204,7 @@ export default function Home() {
                 <ul className={s.userSubMenu}>
 
                   <li className={s.userSubMenuLi}>
-                    <Link
-                      to={"/orders/user"}
-                      className={s.userSubMenuLiA}
-                      href="#"
-                    >
+                    <Link to={"/orders/user"} className={s.userSubMenuLiA} href="#">
                       {" "}
                       My Orders
                     </Link>
@@ -219,7 +215,18 @@ export default function Home() {
                       My Profile
                     </Link>
                   </li>
-                  <li className={s.userSubMenuLi}><Link to={'/wishlist'} className={s.userSubMenuLiA} href="#"> My Wishlist</Link></li>
+                  <li className={s.userSubMenuLi}>
+                    <Link to={'/wishlist'} className={s.userSubMenuLiA} href="#">
+                      {" "}
+                      My Wishlist
+                    </Link>
+                  </li>
+                  <li className={s.userSubMenuLi}>
+                    <Link to={'/cart'} className={s.userSubMenuLiA} href="#">
+                      {" "}
+                      My Cart
+                    </Link>
+                  </li>
                   <li>
                     <a className={s.userSubMenuLiA} onClick={(e) => handleLogOut(e)} href="#">
                       {" "}

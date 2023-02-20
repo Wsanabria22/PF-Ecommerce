@@ -23,7 +23,7 @@ import OrderDetail from './components/OrdersAdministration/OrderDetail'
 import WishList from './components/WishList/WishList';
 import OrderList from './components/Reviews/OrderList'
 import DetailOrder from './components/OrdersAdministration/DetailOrder'
-
+import ReviewForm from "./components/Reviews/ReviewForm";
 
 function App() {
   return (
@@ -49,6 +49,7 @@ function App() {
         <Route exact path='/wishList' component={WishList}/>
         <Route exact path={"/orders/user"} component={OrderList} />
         <Route exact path={"/orders/admind/:id"} component={DetailOrder} />
+        <Route path='/reviews/:productId/:orderId/:userId' component={ReviewForm}/>
     </div>
   );
 }

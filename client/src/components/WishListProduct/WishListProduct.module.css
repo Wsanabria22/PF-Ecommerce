@@ -1,16 +1,19 @@
 .tableRowEven {
-    background-color: #010a13;
-    
+    background-color: aliceblue;
+    color: black;
 }
 .tableRowOdd {
-    background-color: #13304e;
+    background-color:  azure;
+    color: black;
 }
 .tableRowEven:hover {
     background-color: #03203a;
+    color: whitesmoke;
     
 }
 .tableRowOdd:hover {
     background-color: #0d1f33;
+    color: whitesmoke;
 }
 .quantityInput {
     max-width: 50px;
