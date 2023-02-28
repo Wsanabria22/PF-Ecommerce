@@ -120,6 +120,35 @@ const updateProduct = async (req, res, next) => {
   }
 };
 
+
+const toggleStatusProduct = async (req, res, next) => {
+try {
+  const { id } = req.params;
+  const { status } = req.body;
+  console.log('body',req.body);
+  const product = await Product.findByPk(id);
+  console.log('product',product);
+  if (product) {
+    const updated = await Product.update(
+      { active: status },
+      { where: { id: id } }
+    )
+    console.log('updated',updated)
+    if (updated[0] === 1) {
+      const product = await Product.findByPk(id);
+      console.log('product upadated',product);
+      res.status(200).json({ msg:  `Product ${id} updated in the DB` });
+    }
+  } else {
+    res.status(400).json({ msg: `Product ${id} not found in the DB` });
+  }
+} catch (error) {
+  next(error);
+}
+
+};
+
+
 const postReviews = async (req, res, next) => {
   const productId = req.params.id;
   const { body } = req;
@@ -177,6 +206,7 @@ module.exports = {
   getProductById,
   deleteProduct,
   updateProduct,
+  toggleStatusProduct,
   postReviews,
   getReviews,
   deleteReview,

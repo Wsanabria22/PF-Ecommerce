@@ -1,17 +1,19 @@
 .mainDiv {
-    min-width: 960px;
-    max-width: 960px;
+    min-width: 100%;
     text-align: center;
     align-self: center;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    /* background-color: #f2f4f6;
+    color: #fafafb; */
 }
 
 .form{
-    min-width: 960px;
-    max-width: 960px;
+    max-width: 70%;
     display: flex;
     flex-direction: column;
+    /* font-size: .07rem; */
 }
 .divInput {
     display: flex;
@@ -62,6 +64,7 @@
 }
 .imageToAdd {
     display: flex;
+    flex-direction: row;
     text-align: center;
     align-items: center;
     margin-bottom: 15px;
@@ -69,8 +72,8 @@
     
 }
 .image {
-    min-width: 150px;
-    min-height: 150px;
+    width: 80px;
+    height: 80px;
     margin-right: 15px;
 }
 .eliminar {

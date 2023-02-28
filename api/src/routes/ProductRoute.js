@@ -9,6 +9,7 @@ const {
   postReviews,
   getReviews,
   deleteReview,
+  toggleStatusProduct,
 } = require("../Controllers/productController");
 const { userAuth } = require("../Controllers/userController");
 
@@ -22,5 +23,5 @@ router.put("/:id", updateProduct);
 router.post("/:id/reviews", postReviews);
 router.get("/:id/reviews", getReviews);
 router.delete("/reviews/:id", deleteReview);
-
+router.put("/status/:id", toggleStatusProduct);
 module.exports = router;

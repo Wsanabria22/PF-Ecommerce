@@ -1,15 +1,15 @@
 import { TableRow } from "@mui/material";
 import React from "react";
-//import { useState } from "react";
-//import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import * as actions from "../../redux/actions/productsActions";
 import styles from "../UserRow/userRow.module.css";
 import s from "./OrderRow.module.css";
-import { TableCell } from "@mui/material";
-//import {  useEffect } from "react";
-import { Link } from "react-router-dom";
+import { TableCell, Button } from "@mui/material";
+import DetailsIcon from '@mui/icons-material/Details';
+import CancelIcon from '@mui/icons-material/Cancel';
+import CheckIcon from '@mui/icons-material/Check';
+import SendSharpIcon from '@mui/icons-material/SendSharp';
 
 export default function OrderRow({
   id,
@@ -27,10 +27,12 @@ export default function OrderRow({
     e.preventDefault();
     dispatch(actions.cancellOrder(id));
   }
+
   function handleConfirm(e) {
     e.preventDefault();
     dispatch(actions.confirmOrder(id));
   }
+
   async function handleShipping(e) {
     e.preventDefault();
     await dispatch(actions.shippingOrder(id));
@@ -56,41 +58,37 @@ export default function OrderRow({
       <TableCell sx={{ color: "#e7ebf0" }}>{price}</TableCell>
       <TableCell sx={{ color: "#e7ebf0" }}>{user}</TableCell>
       <TableCell sx={{ color: "#e7ebf0" }}>
-      <button
-          className={s.btns0}
+      <Button size="small" variant="contained" endIcon={<DetailsIcon />} color="info"
           type="submit"
           onClick={() => handleDetailCard()}
         >
-         More Details
-        </button>
+         Details
+        </Button>
         {/* <Link to={`/orderDetails/${user}/${id}`}>More Details</Link> */}
       </TableCell>
       <TableCell sx={{ color: "#e7ebf0" }}>
-        <button
-          className={s.btns0}
+        <Button size="small" variant="contained" endIcon={<CancelIcon />} color="warning"
           type="submit"
           onClick={(e) => handleCancell(e)}
         >
-          X
-        </button>
+          Cancel
+        </Button>
       </TableCell>
       <TableCell sx={{ color: "#e7ebf0" }}>
-        <button
-          className={s.btns1}
+        <Button size="small" variant="contained" endIcon={<CheckIcon />} color="success"
           type="submit"
           onClick={(e) => handleConfirm(e)}
         >
-          &#10003;
-        </button>
+          Confirm
+        </Button>
       </TableCell>
       <TableCell sx={{ color: "#e7ebf0" }}>
-        <button
-          className={s.btnsSent}
+        < Button size="small" variant="contained" endIcon={<SendSharpIcon />} color="secondary"
           type="submit"
           onClick={(e) => handleShipping(e)}
         >
           {orderShipping}
-        </button>
+        </Button>
       </TableCell>
     </TableRow>
   );

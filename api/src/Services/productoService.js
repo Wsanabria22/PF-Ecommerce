@@ -68,6 +68,7 @@ const getLastIdProduct = async () => {
   return allId;
 };
 
+
 module.exports = {
   getAllProducts,
   createNewProduct,

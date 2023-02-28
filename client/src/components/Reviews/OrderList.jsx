@@ -40,9 +40,6 @@ const useStyles = makeStyles((theme) => ({
     height: 140,
     width: 100,
   },
-  control: {
-    padding: theme.spacing(2),
-  },
   card: {
     // width: 400,
     // height: 800,

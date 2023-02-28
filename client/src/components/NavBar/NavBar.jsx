@@ -8,8 +8,8 @@ export default function NavBar() {
   return (
     <div className={style.navbar}>
       <div>
-        <Link to={"/createProduct"}>
-          <button className={s.btns}>Create Product</button>
+        <Link to={"/administrateProducs"}>
+          <button className={s.btns}>Product Dashboard</button>
         </Link>
         <Link to={"/administrateUsers"}>
           <button className={s.btns}>Users Dashboard</button>

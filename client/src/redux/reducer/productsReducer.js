@@ -38,7 +38,11 @@ export default function productsReducer(state = initialState, action) {
         ...state,
         detail: action.payload,
       };
-
+    case "CLEAR_PRODUCT_DETAIL":
+      return {
+        ...state,
+        detail: action.payload,
+      };
     case "GET_CATEGORIES":
       return {
         ...state,
@@ -414,6 +418,10 @@ export default function productsReducer(state = initialState, action) {
         wishListItems: state.wishListItems.filter((wishListItem) => {
           return wishListItem.id !== action.payload;
         }),
+      };
+    case "TOGGLE_STATUS_PRODUCT":
+      return {
+        ...state,
       };
     default:
       return { ...state };

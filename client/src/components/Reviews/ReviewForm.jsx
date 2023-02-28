@@ -67,9 +67,6 @@ const useStyles = makeStyles((theme) => ({
     fontfamily: "Poppins",
     fontSize: 20,
   },
-  submitButton: {
-    marginTop: theme.spacing(2),
-  },
   buttonBack: {
     display: "flex",
     justifyContent: "flex-End",
@@ -101,13 +98,13 @@ export default function ReviewForm() {
     console.log('productDetail', productDetail);
   },[productId])
 
-  const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-  }));
+  // const Item = styled(Paper)(({ theme }) => ({
+  //   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+  //   ...theme.typography.body2,
+  //   padding: theme.spacing(1),
+  //   textAlign: "center",
+  //   color: theme.palette.text.secondary,
+  // }));
 
   const handleClickBack = () => {
     history.goBack();

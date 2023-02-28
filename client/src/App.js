@@ -24,6 +24,7 @@ import WishList from './components/WishList/WishList';
 import OrderList from './components/Reviews/OrderList'
 import DetailOrder from './components/OrdersAdministration/DetailOrder'
 import ReviewForm from "./components/Reviews/ReviewForm";
+import ProductAdministration from "./components/ProductAdministration/ProductAdministration";
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
         <Route exact path='/checkout/failure' component={CheckoutFailure} />
         <AdminRoute path='/administrateUsers' component={UsersAdministration} />
         <AdminRoute path="/administrateOrders" component={OrderAdministration} />
+        <AdminRoute path="/administrateProducs" component={ProductAdministration} />
         <Route exact path={'/profile'} component={Profile} />
         <Route exact path = '/orderDetails/:id/:id' component={OrderDetail} />
         <Route exact path='/wishList' component={WishList}/>

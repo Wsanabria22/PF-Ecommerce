@@ -1,9 +1,9 @@
 import axios from "axios";
 import Swal from "sweetalert2";
 
-// const fetchBaseUrlApi = process.env.BASE_URL_API || 'http://localhost:3001'
+const fetchBaseUrlApi = process.env.BASE_URL_API || 'http://localhost:3001'
 
-const fetchBaseUrlApi = 'https://pf-ecommerce-production-aca7.up.railway.app'
+// const fetchBaseUrlApi = 'https://pf-ecommerce-production-aca7.up.railway.app'
 
 export function getProducts() {
   return (dispatch) => {
@@ -614,6 +614,7 @@ export function filterByStatus(type) {
 export function cancellOrder(id) {
   return async function (dispatch) {
     try {
+      console.log('id action cancel',id)
       await axios.delete(`/orders/${id}`);
       return dispatch({
         type: "CANCELL_ORDER",
@@ -627,6 +628,7 @@ export function cancellOrder(id) {
 export function confirmOrder(id) {
   return async function (dispatch) {
     try {
+      console.log('id action confirm',id)
       await axios.post(`/orders/${id}`);
       return dispatch({
         type: "CONFIRM_ORDER",
@@ -695,5 +697,28 @@ export function getOrdById(id) {
     } catch (err) {
       console.log(err);
     }
+  };
+}
+
+
+export function toggleStatusProduct(payload) {
+  return async function (dispatch) {
+    try {
+      console.log('id action toggle:',payload)
+      await axios.put(`/product/status/${payload.id}`, payload);
+      return dispatch({
+        type: "TOGGLE_STATUS_PRODUCT",
+        payload: "",
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function clearProductDetail() {
+  return {
+    type: "CLEAR_PRODUCT_DETAIL",
+    payload: {},
   };
 }
