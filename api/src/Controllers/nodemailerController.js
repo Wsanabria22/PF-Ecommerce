@@ -6,16 +6,20 @@ let mailTransporter = nodemailer.createTransport({
     secure: true,
     service: 'gmail',
     auth: {
-        user: 'gonzalovalloneivan',
-        pass: 'ldldgpwldpwyxhcz'
+        user: 'william.sanabriap@gmail.com',
+        pass: 'acalzbtllqppetrv'
     },
     tls:{rejectUnauthorized:false}
+});
+
+mailTransporter.verify().then(() => {
+  console.log('Redy to send emails')
 });
 
 const deliverMail = async (email, subject, text, html) =>{
     try{
         let mailDetails = {
-            from: 'gonzalovalloneivan@gmail.com.ar',
+            from: 'william.sanabriap@gmail.com',
             to: `${email}`,
             subject: `${subject}`,
             text: `${text}`,
@@ -24,6 +28,7 @@ const deliverMail = async (email, subject, text, html) =>{
         await mailTransporter.sendMail(mailDetails);
         return true
     }catch(error){
+        console.log('Send mail error;', error);
         return false
     }
 }

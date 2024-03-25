@@ -26,10 +26,7 @@ export default function PasswordConfirm() {
     e.preventDefault();
     if (userData.password && userData.password2) {
       if (userData.password === userData.password2) {
-        if(
-          token === localStorage.getItem("token2") &&
-          email === localStorage.getItem("email")
-        ){
+        if(token === localStorage.getItem("token2") && email === localStorage.getItem("email")){
           dispatch(actions.resetConfirm(userData));
           setUserData({
             email: "",

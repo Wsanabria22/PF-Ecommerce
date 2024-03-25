@@ -519,8 +519,6 @@ export function resetPassword(payload) {
       });
       localStorage.setItem("token2", response.data.token);
       localStorage.setItem("email", response.data.mail);
-      console.log(response.data.mail);
-      console.log(response.data.token);
     } catch (error) {
       Swal.fire({
         title: "Invalid Email",

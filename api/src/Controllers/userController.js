@@ -141,13 +141,16 @@ const userAuth = async (req, res, next) =>{
 
 const resetPw = async (req, res, next)=>{
     try{
+        console.log('email',req.body.email)
         const user = await User.findOne({where: {email:  req.body.email}});
+        console.log('user',user)
         if(user){
             let subject = "Password reset";
             let text = "";
             let email = user.email;
             const secret = JWT_KEY + user.password;
             const token = jwt.sign({email: email, id: user.id},secret,{expiresIn:"5m"})
+            console.log('token',token)
             let html = `<p>Click <a href="http://localhost:3000/passConfirm/${email}/${token}">here</a> to reset your password</p><br><p>Please ignore this email if you didnt request a password reset<p>`
             let result = await deliverMail(email, subject, text, html)
             console.log(result)
