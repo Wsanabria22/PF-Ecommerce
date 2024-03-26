@@ -16,7 +16,7 @@ console.log('variables de entorno',
   process.env.REACT_APP_AUTH0_DOMAIN,
   process.env.REACT_APP_AUTH0_CLIENT_ID,
   process.env.BASE_URL_API,
-  process.env.BASE_URL_APP
+  process.env.BASE_URL_APP,
 )
 // REACT_APP_AUTH0_DOMAIN=dev-5h1bog45hog5t2oc.us.auth0.com
 // REACT_APP_AUTH0_CLIENT_ID=51MjhyIb5bsjWBFdgVk3S0D7BEhFladQ
