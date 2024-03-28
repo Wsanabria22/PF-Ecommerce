@@ -8,7 +8,9 @@ const { ADMIN_PASS } = process.env;
 
 const storeAllProducts = async () =>{
     try{
-        await Product.destroy();
+        await Product.destroy({
+            truncate: true
+          });
         for (let i = 0; i < apiArray.length; i++) {
             let nuevo = await Product.create(apiArray[i]);
             let nuevaCat = await Category.findOne({where:{name: apiArray[i].categories}});
