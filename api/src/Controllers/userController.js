@@ -89,6 +89,7 @@ const swapType = async(req, res, next) =>{
 }
 
 const userLogin = async(req, res, next) =>{
+    console.log('ingresando a login',req.body.email);
     try{
         const user = await User.findOne({ where : {email : req.body.email, active: true }});
         if(user){
@@ -112,6 +113,7 @@ const userLogin = async(req, res, next) =>{
             res.status(400).json({msg: "User does not exist"});
         }
     }catch(error){
+        console.log(error);
         next(error)
     }
 }
