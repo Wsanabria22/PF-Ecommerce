@@ -101,7 +101,7 @@ const Cart = () => {
   const user = sessionStorage.getItem("userId");
 
   const setAddress = () => {
-    setInput( prevState => ({...prevState, address: user.adress}))
+    setInput( prevState => ({...prevState, address: user.address}))
   }
 
   useEffect(()=>{
