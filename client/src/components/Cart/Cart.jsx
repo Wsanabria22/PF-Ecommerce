@@ -88,10 +88,8 @@ const useStyles = makeStyles((theme) => ({
 
 
 const Cart = () => {
-  let userAddress;
   const cart = useSelector((state) => state.cart);
-  const users = useSelector((state) => state.users);
-  const user1 = useSelector((state) => state.user);
+  const userData = useSelector((state) => state.user);
   
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -101,7 +99,7 @@ const Cart = () => {
   const user = sessionStorage.getItem("userId");
 
   const setAddress = () => {
-    setInput( prevState => ({...prevState, address: user.address}))
+    setInput( prevState => ({...prevState, address: userData.address}))
   }
 
   useEffect(()=>{
@@ -147,7 +145,6 @@ const Cart = () => {
     let order = {
       id: parseInt(user),
       idMp: pagoId,
-
       price: totalAmount,
       quantity: totalQuantity,
       pedido: cart,
