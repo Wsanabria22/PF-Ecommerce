@@ -91,27 +91,32 @@ const Cart = () => {
   let userAddress;
   const cart = useSelector((state) => state.cart);
   const users = useSelector((state) => state.users);
-  
   const user1 = useSelector((state) => state.user);
   
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
   const [modalOpen, openLogin, closeLogin] = useLogin(false);
+  const [input, setInput] = useState({address: ""});
   const user = sessionStorage.getItem("userId");
+
+  const setAddress = () => {
+    setInput( prevState => ({...prevState, address: user.adress}))}
+  }
 
   useEffect(()=>{
     dispatch(getUsers())
     
-    userAddress = users.filter(userEl => (userEl.id === user1.id));
-    console.log(userAddress)
-    if(userAddress.length>0){
-    setInput( prevState => ({...prevState, address: userAddress[0].adress}))}else{input.address=""}
+    // userAddress = users.filter(userEl => (userEl.id === user1.id));
+    // console.log(userAddress)
+    // if(userAddress.length>0){
+    // setInput( prevState => ({...prevState, address: userAddress[0].adress}))}
+    // else{input.address=""}
+    setAddress();
+
   },[dispatch])
 
-  const [input, setInput] = useState({
-    address: "",
-  });
+
 
   function handleInputChange(e) {
     e.preventDefault();
